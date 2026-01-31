@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/clearance-system-or-clearance-sys-v2/sw.js', { scope: '/clearance-system-or-clearance-sys-v2/' })})}
