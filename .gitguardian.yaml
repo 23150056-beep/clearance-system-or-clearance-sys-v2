@@ -1,0 +1,11 @@
+version: 2
+
+# These are intentional demo/test credentials, not real secrets
+secret:
+  ignored-matches:
+    - match: password123
+      name: "Demo password for testing"
+    - match: staff123
+      name: "Demo staff password for testing"
+    - match: admin123
+      name: "Demo admin password for testing"
