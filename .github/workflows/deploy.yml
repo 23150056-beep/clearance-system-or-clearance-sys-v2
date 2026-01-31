@@ -30,9 +30,13 @@ jobs:
         working-directory: ./clearance_sys_v2
         run: npm run build
 
+      - name: Add .nojekyll file
+        run: touch ./clearance_sys_v2/dist/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./clearance_sys_v2/dist
           publish_branch: gh-pages
+          force_orphan: true
