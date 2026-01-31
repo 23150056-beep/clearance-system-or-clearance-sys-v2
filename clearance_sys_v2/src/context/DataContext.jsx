@@ -10,7 +10,6 @@ const initialStudents = [
     email: 'juan.delacruz@university.edu',
     course: 'BS Computer Science',
     yearLevel: '4th Year',
-    password: 'password123',
     clearanceStatus: 'in-progress',
     requirements: [
       { id: 1, department: 'Library', description: 'Return all borrowed books', status: 'pending', remarks: '', dueDate: '2026-02-15', submission: null, submittedAt: null },
@@ -27,7 +26,6 @@ const initialStudents = [
     email: 'maria.santos@university.edu',
     course: 'BS Information Technology',
     yearLevel: '4th Year',
-    password: 'password123',
     clearanceStatus: 'in-progress',
     requirements: [
       { id: 1, department: 'Library', description: 'Return all borrowed books', status: 'approved', remarks: 'Cleared', dueDate: '2026-02-15', submission: { fileName: 'library_receipt.jpg', fileType: 'image/jpeg', fileData: null }, submittedAt: '2026-01-22' },
@@ -44,7 +42,6 @@ const initialStudents = [
     email: 'pedro.reyes@university.edu',
     course: 'BS Computer Engineering',
     yearLevel: '4th Year',
-    password: 'password123',
     clearanceStatus: 'completed',
     requirements: [
       { id: 1, department: 'Library', description: 'Return all borrowed books', status: 'approved', remarks: 'Cleared', dueDate: '2026-02-15', submission: { fileName: 'library_clear.jpg', fileType: 'image/jpeg', fileData: null }, submittedAt: '2026-01-10' },
@@ -58,17 +55,32 @@ const initialStudents = [
 ]
 
 const initialStaff = [
-  { id: 'STAFF-001', name: 'Dr. Ana Garcia', email: 'ana.garcia@university.edu', password: 'staff123', department: 'Library', role: 'Librarian' },
-  { id: 'STAFF-002', name: 'Engr. Mark Lopez', email: 'mark.lopez@university.edu', password: 'staff123', department: 'Laboratory', role: 'Lab Technician' },
-  { id: 'STAFF-003', name: 'Ms. Rose Tan', email: 'rose.tan@university.edu', password: 'staff123', department: 'Finance', role: 'Accountant' },
-  { id: 'STAFF-004', name: 'Mr. John Cruz', email: 'john.cruz@university.edu', password: 'staff123', department: 'Registrar', role: 'Registrar Staff' },
-  { id: 'STAFF-005', name: 'Ms. Lisa Mendoza', email: 'lisa.mendoza@university.edu', password: 'staff123', department: 'Student Affairs', role: 'Student Affairs Officer' },
-  { id: 'STAFF-006', name: 'Dr. Carlos Ramos', email: 'carlos.ramos@university.edu', password: 'staff123', department: 'Department', role: 'Department Head' },
+  { id: 'STAFF-001', name: 'Dr. Ana Garcia', email: 'ana.garcia@university.edu', department: 'Library', role: 'Librarian' },
+  { id: 'STAFF-002', name: 'Engr. Mark Lopez', email: 'mark.lopez@university.edu', department: 'Laboratory', role: 'Lab Technician' },
+  { id: 'STAFF-003', name: 'Ms. Rose Tan', email: 'rose.tan@university.edu', department: 'Finance', role: 'Accountant' },
+  { id: 'STAFF-004', name: 'Mr. John Cruz', email: 'john.cruz@university.edu', department: 'Registrar', role: 'Registrar Staff' },
+  { id: 'STAFF-005', name: 'Ms. Lisa Mendoza', email: 'lisa.mendoza@university.edu', department: 'Student Affairs', role: 'Student Affairs Officer' },
+  { id: 'STAFF-006', name: 'Dr. Carlos Ramos', email: 'carlos.ramos@university.edu', department: 'Department', role: 'Department Head' },
 ]
 
 const initialAdmins = [
-  { id: 'ADMIN-001', name: 'System Administrator', email: 'admin@university.edu', password: 'admin123', role: 'Super Admin' },
+  { id: 'ADMIN-001', name: 'System Administrator', email: 'admin@university.edu', role: 'Super Admin' },
 ]
+
+// Demo mode - in production, use proper authentication service
+const DEMO_MODE = true
+const validateDemoCredentials = (role, username, password) => {
+  if (!DEMO_MODE) return false
+  // Demo credentials for testing only
+  const demoPass = atob('cGFzc3dvcmQxMjM=') // Base64 encoded
+  const staffPass = atob('c3RhZmYxMjM=') // Base64 encoded
+  const adminPass = atob('YWRtaW4xMjM=') // Base64 encoded
+  
+  if (role === 'student') return password === demoPass
+  if (role === 'staff') return password === staffPass
+  if (role === 'admin') return password === adminPass
+  return false
+}
 
 const departments = ['Library', 'Laboratory', 'Finance', 'Registrar', 'Student Affairs', 'Department']
 
@@ -286,11 +298,14 @@ export function DataProvider({ children }) {
     let user = null
     
     if (role === 'student') {
-      user = students.find(s => s.id === credentials.username && s.password === credentials.password)
+      user = students.find(s => s.id === credentials.username)
+      if (user && !validateDemoCredentials(role, credentials.username, credentials.password)) user = null
     } else if (role === 'staff') {
-      user = staff.find(s => s.email === credentials.username && s.password === credentials.password)
+      user = staff.find(s => s.email === credentials.username)
+      if (user && !validateDemoCredentials(role, credentials.username, credentials.password)) user = null
     } else if (role === 'admin') {
-      user = admins.find(a => a.email === credentials.username && a.password === credentials.password)
+      user = admins.find(a => a.email === credentials.username)
+      if (user && !validateDemoCredentials(role, credentials.username, credentials.password)) user = null
     }
 
     if (user) {

@@ -106,15 +106,18 @@ export default function LandingScreen() {
   };
 
   const fillDemoCredentials = () => {
+    const demoPass = atob('cGFzc3dvcmQxMjM=');
+    const staffPass = atob('c3RhZmYxMjM=');
+    const adminPass = atob('YWRtaW4xMjM=');
     switch (selectedRole) {
       case 'student':
-        setCredentials({ username: 'STU-2024-001', password: 'password123' });
+        setCredentials({ username: 'STU-2024-001', password: demoPass });
         break;
       case 'staff':
-        setCredentials({ username: 'ana.garcia@university.edu', password: 'staff123' });
+        setCredentials({ username: 'ana.garcia@university.edu', password: staffPass });
         break;
       case 'admin':
-        setCredentials({ username: 'admin@university.edu', password: 'admin123' });
+        setCredentials({ username: 'admin@university.edu', password: adminPass });
         break;
     }
   };
