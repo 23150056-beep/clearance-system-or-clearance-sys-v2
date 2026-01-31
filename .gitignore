@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.expo/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Android build files
+*.apk
+*.aab
+*.keystore
+clearance_sys_v2/android/app/build/
+clearance_sys_v2/android/.gradle/
+
+# iOS build files
+*.ipa
+clearance_sys_v2/ios/App/Pods/

@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Clearance System",
+    "slug": "clearance-system",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "clearance",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.university.clearance"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.university.clearance"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Clearance System to access your photos to upload documents.",
+          "cameraPermission": "Allow Clearance System to access your camera to take photos of documents."
+        }
+      ]
+    ]
+  }
+}
